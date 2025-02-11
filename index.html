@@ -16,8 +16,8 @@
 <script src="./dat-gui_panel.js"></script>
 
 <style>
-  /* Change header and footer text to bold */
-  #header, #footer {
+  /* Change header text to bold */
+  #header {
     font-weight: bold;
   }
 
@@ -69,27 +69,6 @@
   .action-btn:hover {
     background-color: #666;
   }
-
-  /* Watermark */
-  #watermark {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    opacity: 0.5;
-    z-index: 9999;
-  }
-
-  /* Date and time display */
-  #datetime {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 16px;
-  }
-
 </style>
 
 </head>
@@ -179,54 +158,37 @@ Blueleap Consultancy
   <div id="nextbtn"></div>
 </div>
 
-<!-- Watermark containing QGIS logo -->
-<img id="watermark" src="https://upload.wikimedia.org/wikipedia/commons/e/e4/QGIS_logo.svg" alt="QGIS Logo" width="100" height="100">
-
-<!-- Date and Time -->
-<div id="datetime"></div>
-
 <script>
-  // Function to update current date and time
-  function updateDateTime() {
-    var date = new Date();
-    var formattedDate = date.toLocaleString(); // Formats as "MM/DD/YYYY, HH:MM:SS"
-    document.getElementById("datetime").textContent = formattedDate;
+Q3D.Config.bgColor = 0x000000; // Set background to black
+Q3D.Config.localMode = true;
+Q3D.Config.animation.enabled = true;
+Q3D.Config.animation.startOnLoad = true;
+Q3D.Config.northArrow.enabled = true;
+Q3D.Config.northArrow.color = 0xff0000;
+
+var container = document.getElementById("view"),
+    app = Q3D.application,
+    gui = Q3D.gui;
+
+app.init(container);    // initialize viewer
+
+// load the scene
+app.loadSceneFile("./data/index/scene.js", function (scene) {
+  // scene file has been loaded
+  app.start();
+
+  gui.dat.initLayersFolder(scene);
+
+}, function (scene) {
+  // all relevant files have been loaded
+
+  if (Q3D.Config.gui.customPlane) {
+    // specify preferred values. If not specified, z range of scene bounding box is used.
+    var zMin = undefined,
+        zMax = undefined;
+    gui.dat.initCustomPlaneFolder(zMin, zMax);
   }
-
-  // Update date and time every second
-  setInterval(updateDateTime, 1000);
-  updateDateTime();  // Initial update
-
-  Q3D.Config.bgColor = 0x000000; // Set background to black
-  Q3D.Config.localMode = true;
-  Q3D.Config.animation.enabled = true;
-  Q3D.Config.animation.startOnLoad = true;
-  Q3D.Config.northArrow.enabled = true;
-  Q3D.Config.northArrow.color = 0xff0000;
-
-  var container = document.getElementById("view"),
-      app = Q3D.application,
-      gui = Q3D.gui;
-
-  app.init(container);    // initialize viewer
-
-  // load the scene
-  app.loadSceneFile("./data/index/scene.js", function (scene) {
-    // scene file has been loaded
-    app.start();
-
-    gui.dat.initLayersFolder(scene);
-
-  }, function (scene) {
-    // all relevant files have been loaded
-
-    if (Q3D.Config.gui.customPlane) {
-      // specify preferred values. If not specified, z range of scene bounding box is used.
-      var zMin = undefined,
-          zMax = undefined;
-      gui.dat.initCustomPlaneFolder(zMin, zMax);
-    }
-  });
+});
 </script>
 
 </body>
