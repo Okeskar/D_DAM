@@ -14,6 +14,63 @@
 <script src="./Qgis2threejs.js"></script>
 <script src="./dat-gui/dat.gui.min.js"></script>
 <script src="./dat-gui_panel.js"></script>
+
+<style>
+  /* Change header text to bold */
+  #header {
+    font-weight: bold;
+  }
+
+  /* Set background to black */
+  body, #view {
+    background-color: black;
+  }
+
+  /* Add circular cursor for rotating the map */
+  #view {
+    cursor: url('https://example.com/circular-cursor.png'), auto; /* Replace with your circular cursor */
+  }
+
+  /* Optional: Additional styling for presentation */
+  #footer {
+    color: white;
+    font-size: 12px;
+  }
+
+  #header {
+    color: white;
+    font-size: 24px;
+  }
+
+  /* Style for popup and query tables */
+  #popup {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  #popup table {
+    color: white;
+  }
+
+  #popup table caption {
+    font-weight: bold;
+  }
+
+  /* Styling for action buttons */
+  .action-btn {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .action-btn:hover {
+    background-color: #666;
+  }
+</style>
+
 </head>
 <body>
 <div id="view">
@@ -102,7 +159,7 @@ Blueleap Consultancy
 </div>
 
 <script>
-Q3D.Config.bgColor = 0xefefef;
+Q3D.Config.bgColor = 0x000000; // Set background to black
 Q3D.Config.localMode = true;
 Q3D.Config.animation.enabled = true;
 Q3D.Config.animation.startOnLoad = true;
@@ -133,5 +190,6 @@ app.loadSceneFile("./data/index/scene.js", function (scene) {
   }
 });
 </script>
+
 </body>
 </html>
